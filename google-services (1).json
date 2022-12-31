@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "998480265084",
+    "project_id": "chatcompose-caa7a",
+    "storage_bucket": "chatcompose-caa7a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998480265084:android:36322421882312b7c66ef9",
+        "android_client_info": {
+          "package_name": "com.example.chatcompose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998480265084-rup13kv1ue72q4fe2t9us8k473h3ulid.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg9b2U46XT1V80PHe0Z1AJjE7NjY0GDTQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998480265084-rup13kv1ue72q4fe2t9us8k473h3ulid.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

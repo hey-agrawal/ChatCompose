@@ -1,7 +1,11 @@
 package com.example.chatcompose
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,8 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 @Composable
 fun WelcomeScreen(
     modifier: Modifier,
-    navigateToProfile: () -> Unit
-){
+    navigateToProfile: () -> Unit,
+) {
     val context = LocalContext.current
     val launcher = rememberFirebaseAuthLauncher(
         onAuthComplete = {
@@ -28,7 +32,7 @@ fun WelcomeScreen(
     )
 
     Column(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -50,9 +54,10 @@ fun WelcomeScreen(
             ),
             elevation = ButtonDefaults.buttonElevation(defaultElevation = 2.dp)
         ) {
-            Icon(
+            Image(
                 painter = painterResource(id = R.drawable.logos_google),
-                contentDescription = "icon"
+                contentDescription = "icon",
+                modifier = Modifier.size(18.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
             Text(text = "Sign in with Google")

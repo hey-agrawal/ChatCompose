@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">ChatCompose</string>
     <string name="name_label">Name</string>
+    <string name="email">Email</string>
+    <string name="dob">"Date of birth "</string>
+    <string name="bio">Bio</string>
 </resources>

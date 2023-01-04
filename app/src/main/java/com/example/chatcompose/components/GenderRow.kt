@@ -1,9 +1,6 @@
 package com.example.chatcompose.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
@@ -23,7 +20,6 @@ fun GenderRow(gender: String, selected: Boolean, onClicked: () -> Unit, modifier
             selectedColor = MaterialTheme.colorScheme.onPrimaryContainer,
             unselectedColor = MaterialTheme.colorScheme.outline
         ))
-        Spacer(modifier = Modifier.width(8.dp))
-        Text(text = gender, color = color)
+        Text(text = gender, color = color, modifier = Modifier.padding(start = 8.dp))
     }
 }

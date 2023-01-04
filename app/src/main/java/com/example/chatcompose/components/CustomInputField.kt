@@ -41,8 +41,9 @@ fun CustomInputField(
         modifier = modifier.fillMaxWidth(),
         singleLine = true,
         trailingIcon = {
+
             AnimatedVisibility(
-                visible = value.isNotEmpty(),
+                visible = value.isNotEmpty() && !readOnly,
                 enter = scaleIn(),
                 exit = scaleOut()
             ) {

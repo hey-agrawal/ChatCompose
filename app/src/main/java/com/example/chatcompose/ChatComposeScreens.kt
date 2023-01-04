@@ -3,8 +3,7 @@ package com.example.chatcompose
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.TopAppBar
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -21,7 +20,7 @@ enum class ChatComposeScreens {
 fun ChatApp(
     modifier: Modifier,
     navHostController: NavHostController = rememberNavController(),
-){
+) {
     val backStackEntry by navHostController.currentBackStackEntryAsState()
     val currentScreen =
         ChatComposeScreens.valueOf(backStackEntry?.destination?.route
@@ -32,13 +31,13 @@ fun ChatApp(
         ChatComposeScreens.PROFILE -> "Profile"
     }
 
-        Scaffold(
+    Scaffold(
         topBar = {
             TopAppBar {
                 Text(text = title)
             }
         }
-    ) {innerPadding ->
+    ) { innerPadding ->
         NavHost(
             navController = navHostController,
             startDestination = ChatComposeScreens.WELCOME.name,
@@ -54,9 +53,9 @@ fun ChatApp(
             composable(
                 route = ChatComposeScreens.PROFILE.name,
             ) {
-                ProfileScreen()
-            }
+                ProfileScreen(onSaveClicked = {})
 
+            }
         }
     }
 }

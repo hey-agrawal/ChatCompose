@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ChatCompose</string>
+    <string name="name_label">Name</string>
 </resources>

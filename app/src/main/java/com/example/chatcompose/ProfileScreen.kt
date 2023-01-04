@@ -74,7 +74,7 @@ fun ProfileScreen(
             modifier = Modifier.fillMaxWidth()
         )
         CustomInputField(
-            label = R.string.name_label,
+            label = R.string.email,
             icon = Icons.Rounded.Email,
             readOnly = true,
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
@@ -87,7 +87,7 @@ fun ProfileScreen(
             modifier = Modifier.fillMaxWidth()
         )
         CustomInputField(
-            label = R.string.name_label,
+            label = R.string.bio,
             icon = Icons.Rounded.Info,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
@@ -114,7 +114,7 @@ fun ProfileScreen(
             val genderList = listOf("Male", "Female")
             var selectedGender by rememberSaveable { mutableStateOf("") }
 
-            Text(text = "Gender", style = MaterialTheme.typography.titleLarge)
+            Text(text = "Gender", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp))
             Spacer(modifier = Modifier.height(12.dp))
             genderList.forEach { item ->
                 GenderRow(
@@ -133,12 +133,11 @@ fun ProfileScreen(
                         role = Role.RadioButton
                     )
                 )
-                Spacer(modifier = Modifier.height(12.dp))
             }
 
         }
         CustomInputField(
-            label = R.string.name_label,
+            label = R.string.dob,
             icon = Icons.Rounded.CalendarMonth,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,

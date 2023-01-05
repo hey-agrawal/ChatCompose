@@ -57,10 +57,10 @@ fun WelcomeScreen(
             Image(
                 painter = painterResource(id = R.drawable.logos_google),
                 contentDescription = "icon",
-                modifier = Modifier.size(18.dp)
+                modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(16.dp))
-            Text(text = "Sign in with Google")
+            Text(text = "Sign in with Google", style = MaterialTheme.typography.titleMedium)
         }
     }
 }

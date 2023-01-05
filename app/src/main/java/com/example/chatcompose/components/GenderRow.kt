@@ -12,14 +12,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun GenderRow(gender: String, selected: Boolean, onClicked: () -> Unit, modifier: Modifier){
-    val color = if(selected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.outline
     Row(modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start) {
         RadioButton(selected = selected, onClick = onClicked, colors = RadioButtonDefaults.colors(
             selectedColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            unselectedColor = MaterialTheme.colorScheme.outline
         ))
-        Text(text = gender, color = color, modifier = Modifier.padding(start = 8.dp))
+        Text(text = gender, color = MaterialTheme.colorScheme.onPrimaryContainer, modifier = Modifier.padding(start = 8.dp))
     }
 }

@@ -6,7 +6,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.TopAppBar
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -47,10 +46,13 @@ fun ChatApp(
 
     Scaffold(
         topBar = {
-            TopAppBar(backgroundColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary) {
-                Text(text = title)
-            }
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(),
+                title = {
+                    Text(text = title)
+                }
+            )
+
         }
     ) { innerPadding ->
         NavHost(

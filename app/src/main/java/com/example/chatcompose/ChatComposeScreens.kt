@@ -1,7 +1,11 @@
 package com.example.chatcompose
 
+import android.net.Uri
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.TopAppBar
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -30,12 +34,28 @@ fun ChatApp(
         ChatComposeScreens.WELCOME -> "Welcome to ChatApp"
         ChatComposeScreens.PROFILE -> "Profile"
     }
+    var pickedPhoto: Uri? by remember { mutableStateOf(null) }
+    val pickPhoto =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                pickedPhoto = uri
+            } else {
+                Log.d("PhotoPicker", "No media selected")
+            }
+        }
 
     Scaffold(
         topBar = {
-            TopAppBar {
-                Text(text = title)
-            }
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary
+                ),
+                title = {
+                    Text(text = title)
+                }
+            )
+
         }
     ) { innerPadding ->
         NavHost(
@@ -53,7 +73,14 @@ fun ChatApp(
             composable(
                 route = ChatComposeScreens.PROFILE.name,
             ) {
-                ProfileScreen(onSaveClicked = {})
+                ProfileScreen(
+                    onSaveClicked = {},
+                    onPhotoClicked = {
+                        pickPhoto.launch(PickVisualMediaRequest(
+                            ActivityResultContracts.PickVisualMedia.ImageOnly))
+                    },
+                    photoUri = pickedPhoto
+                )
 
             }
         }

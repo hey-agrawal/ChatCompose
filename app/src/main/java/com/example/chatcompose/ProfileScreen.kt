@@ -1,20 +1,20 @@
 package com.example.chatcompose
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CalendarMonth
-import androidx.compose.material.icons.rounded.Email
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,12 +24,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.chatcompose.components.CustomInputField
 import com.example.chatcompose.components.GenderRow
 import com.google.firebase.auth.ktx.auth
@@ -38,6 +45,8 @@ import com.google.firebase.ktx.Firebase
 @Composable
 fun ProfileScreen(
     onSaveClicked: () -> Unit,
+    onPhotoClicked: () -> Unit,
+    photoUri: Uri?
 ) {
     Column(
         modifier = Modifier
@@ -52,10 +61,47 @@ fun ProfileScreen(
         var dob by rememberSaveable { mutableStateOf("") }
         var gender by rememberSaveable { mutableStateOf("") }
 
-        Box(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+        Button(
+            onClick = onPhotoClicked,
+            shape = CircleShape,
+            modifier = Modifier.size(80.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            )
         ) {
-            //TODO image picker
+            Box(modifier = Modifier,
+                contentAlignment = Alignment.Center
+            ) {
+                if (photoUri != null) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(context = LocalContext.current)
+                            .data(photoUri)
+                            .crossfade(true)
+                            .build(),
+                        modifier = Modifier
+                            .size(80.dp),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = "image",
+                    )
+                }
+                else {
+                    Column(
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        Icon(imageVector = Icons.Rounded.AddAPhoto, contentDescription = "Icon")
+                        androidx.compose.material3.Text(modifier = Modifier
+                            .fillMaxWidth(),
+                            text = "Add photo",
+                            style = MaterialTheme.typography.labelSmall.copy(
+                                fontWeight = FontWeight.Normal,
+                                letterSpacing = 0.1.sp,
+                                textAlign = TextAlign.Center
+                            ),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
         }
         CustomInputField(
             label = R.string.name_label,

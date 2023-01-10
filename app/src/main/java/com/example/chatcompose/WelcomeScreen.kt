@@ -30,9 +30,8 @@ fun WelcomeScreen(
         onAuthError = {
         }
     )
-
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

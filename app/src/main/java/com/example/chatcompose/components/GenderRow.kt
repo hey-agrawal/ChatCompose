@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.RadioButton
 import androidx.compose.material.RadioButtonDefaults
 import androidx.compose.material.Text
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,9 +16,19 @@ fun GenderRow(gender: String, selected: Boolean, onClicked: () -> Unit, modifier
     Row(modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start) {
-        RadioButton(selected = selected, onClick = onClicked, colors = RadioButtonDefaults.colors(
-            selectedColor = MaterialTheme.colorScheme.onPrimaryContainer,
-        ))
-        Text(text = gender, color = MaterialTheme.colorScheme.onPrimaryContainer, modifier = Modifier.padding(start = 8.dp))
+        RadioButton(
+            selected = selected,
+            onClick = onClicked,
+            colors = RadioButtonDefaults.colors(
+                selectedColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                unselectedColor = MaterialTheme.colorScheme.onPrimaryContainer
+            ),
+            modifier = Modifier.padding(start = 12.dp)
+        )
+        Text(
+            text = gender,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            modifier = Modifier.padding(start = ButtonDefaults.IconSpacing)
+        )
     }
 }

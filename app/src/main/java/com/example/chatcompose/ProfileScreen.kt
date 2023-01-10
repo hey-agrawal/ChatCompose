@@ -3,12 +3,10 @@ package com.example.chatcompose
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -32,7 +30,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -46,12 +43,11 @@ import com.google.firebase.ktx.Firebase
 fun ProfileScreen(
     onSaveClicked: () -> Unit,
     onPhotoClicked: () -> Unit,
-    photoUri: Uri?
+    photoUri: Uri?,
+    modifier: Modifier
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -64,10 +60,11 @@ fun ProfileScreen(
         Button(
             onClick = onPhotoClicked,
             shape = CircleShape,
-            modifier = Modifier.size(80.dp),
+            modifier = Modifier.size(80.dp).padding(top = 24.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+            ),
+            contentPadding = PaddingValues(0.dp)
         ) {
             Box(modifier = Modifier,
                 contentAlignment = Alignment.Center
@@ -88,14 +85,12 @@ fun ProfileScreen(
                     Column(
                         verticalArrangement = Arrangement.Center
                     ) {
-                        Icon(imageVector = Icons.Rounded.AddAPhoto, contentDescription = "Icon")
-                        androidx.compose.material3.Text(modifier = Modifier
-                            .fillMaxWidth(),
+                        Icon(imageVector = Icons.Rounded.AddAPhoto, contentDescription = "Icon", tint = MaterialTheme.colorScheme.onSurfaceVariant )
+                        androidx.compose.material3.Text(
                             text = "Add photo",
                             style = MaterialTheme.typography.labelSmall.copy(
                                 fontWeight = FontWeight.Normal,
                                 letterSpacing = 0.1.sp,
-                                textAlign = TextAlign.Center
                             ),
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -151,17 +146,20 @@ fun ProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 10.dp, vertical = 12.dp)
                 .background(color = MaterialTheme.colorScheme.primaryContainer,
                     shape = MaterialTheme.shapes.small),
-            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {
             val genderList = listOf("Male", "Female")
             var selectedGender by rememberSaveable { mutableStateOf("") }
 
-            Text(text = "Gender", style = MaterialTheme.typography.titleLarge, modifier = Modifier.padding(horizontal = 12.dp, vertical = 10.dp))
-            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = "Gender",
+                style = MaterialTheme.typography.titleLarge,
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.padding(start = 12.dp, top = 12.dp)
+            )
             genderList.forEach { item ->
                 GenderRow(
                     gender = item,

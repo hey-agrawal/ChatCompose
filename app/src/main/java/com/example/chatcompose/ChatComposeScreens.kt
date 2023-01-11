@@ -5,7 +5,10 @@ import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -66,7 +69,7 @@ fun ChatApp(
             composable(
                 route = ChatComposeScreens.WELCOME.name,
             ) {
-                WelcomeScreen(modifier = Modifier) {
+                WelcomeScreen(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
                     navHostController.navigate(ChatComposeScreens.PROFILE.name)
                 }
             }
@@ -79,9 +82,12 @@ fun ChatApp(
                         pickPhoto.launch(PickVisualMediaRequest(
                             ActivityResultContracts.PickVisualMedia.ImageOnly))
                     },
-                    photoUri = pickedPhoto
+                    photoUri = pickedPhoto,
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(innerPadding)
+                        .verticalScroll(rememberScrollState())
                 )
-
             }
         }
     }

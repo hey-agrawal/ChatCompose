@@ -1,6 +1,10 @@
-package com.example.chatcompose
+package com.example.chatcompose.ui.screens
 
 import android.net.Uri
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
@@ -14,11 +18,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -34,18 +35,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.chatcompose.components.CustomInputField
-import com.example.chatcompose.components.GenderRow
+import com.example.chatcompose.R
+import com.example.chatcompose.ui.components.CustomInputField
+import com.example.chatcompose.ui.components.GenderRow
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 @Composable
-fun ProfileScreen(
+fun EditProfileScreen(
     onSaveClicked: () -> Unit,
-    onPhotoClicked: () -> Unit,
-    photoUri: Uri?,
     modifier: Modifier
 ) {
+    var pickedPhoto: Uri? by remember { mutableStateOf(null) }
+    val pickPhoto =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            if (uri != null) {
+                pickedPhoto = uri
+            } else {
+                Log.d("PhotoPicker", "No media selected")
+            }
+        }
+
     Column(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(24.dp),
@@ -58,9 +68,16 @@ fun ProfileScreen(
         var gender by rememberSaveable { mutableStateOf("") }
 
         Button(
-            onClick = onPhotoClicked,
+            onClick = {
+                pickPhoto.launch(
+                    PickVisualMediaRequest(
+                    ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            },
             shape = CircleShape,
-            modifier = Modifier.size(80.dp).padding(top = 24.dp),
+            modifier = Modifier
+                .size(80.dp)
+                .padding(top = 24.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = MaterialTheme.colorScheme.surfaceVariant
             ),
@@ -69,10 +86,10 @@ fun ProfileScreen(
             Box(modifier = Modifier,
                 contentAlignment = Alignment.Center
             ) {
-                if (photoUri != null) {
+                if (pickedPhoto != null) {
                     AsyncImage(
                         model = ImageRequest.Builder(context = LocalContext.current)
-                            .data(photoUri)
+                            .data(pickedPhoto)
                             .crossfade(true)
                             .build(),
                         modifier = Modifier
@@ -146,8 +163,10 @@ fun ProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(color = MaterialTheme.colorScheme.primaryContainer,
-                    shape = MaterialTheme.shapes.small),
+                .background(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                    shape = MaterialTheme.shapes.small
+                ),
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.Start
         ) {

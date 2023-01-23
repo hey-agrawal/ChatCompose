@@ -1,7 +1,7 @@
 package com.example.chatcompose.data
 
 class UserRepository(
-    val userData: UserData
+    val userData: User
 ) {
     fun getUserName() = userData.name
     fun getUserProfile() = userData.profileImage

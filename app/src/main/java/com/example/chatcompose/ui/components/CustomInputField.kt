@@ -1,4 +1,4 @@
-package com.example.chatcompose.components
+package com.example.chatcompose.ui.components
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility

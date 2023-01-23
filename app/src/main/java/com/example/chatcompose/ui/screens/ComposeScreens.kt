@@ -1,10 +1,5 @@
-package com.example.chatcompose
+package com.example.chatcompose.ui.screens
 
-import android.net.Uri
-import android.util.Log
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.PickVisualMediaRequest
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -18,7 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
-enum class ChatComposeScreens {
+enum class ComposeScreens {
     WELCOME, PROFILE,
 }
 
@@ -30,22 +25,15 @@ fun ChatApp(
 ) {
     val backStackEntry by navHostController.currentBackStackEntryAsState()
     val currentScreen =
-        ChatComposeScreens.valueOf(backStackEntry?.destination?.route
-            ?: ChatComposeScreens.WELCOME.name)
+        ComposeScreens.valueOf(
+            backStackEntry?.destination?.route
+                ?: ComposeScreens.WELCOME.name
+        )
 
     val title = when (currentScreen) {
-        ChatComposeScreens.WELCOME -> "Welcome to ChatApp"
-        ChatComposeScreens.PROFILE -> "Profile"
+        ComposeScreens.WELCOME -> "Welcome to ChatApp"
+        ComposeScreens.PROFILE -> "Profile"
     }
-    var pickedPhoto: Uri? by remember { mutableStateOf(null) }
-    val pickPhoto =
-        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-            if (uri != null) {
-                pickedPhoto = uri
-            } else {
-                Log.d("PhotoPicker", "No media selected")
-            }
-        }
 
     Scaffold(
         topBar = {
@@ -63,26 +51,29 @@ fun ChatApp(
     ) { innerPadding ->
         NavHost(
             navController = navHostController,
-            startDestination = ChatComposeScreens.WELCOME.name,
+            startDestination = ComposeScreens.WELCOME.name,
             modifier = modifier.padding(innerPadding),
         ) {
             composable(
-                route = ChatComposeScreens.WELCOME.name,
+                route = ComposeScreens.WELCOME.name,
             ) {
-                WelcomeScreen(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-                    navHostController.navigate(ChatComposeScreens.PROFILE.name)
-                }
+                WelcomeScreen(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                    navigateToProfile = {
+                        navHostController.navigate(ComposeScreens.PROFILE.name){
+                           popUpTo(ComposeScreens.PROFILE.name){
+                               inclusive = false
+                           }
+                        }
+                    }
+                )
             }
             composable(
-                route = ChatComposeScreens.PROFILE.name,
+                route = ComposeScreens.PROFILE.name,
             ) {
-                ProfileScreen(
+                EditProfileScreen(
                     onSaveClicked = {},
-                    onPhotoClicked = {
-                        pickPhoto.launch(PickVisualMediaRequest(
-                            ActivityResultContracts.PickVisualMedia.ImageOnly))
-                    },
-                    photoUri = pickedPhoto,
                     modifier = modifier
                         .fillMaxSize()
                         .padding(innerPadding)

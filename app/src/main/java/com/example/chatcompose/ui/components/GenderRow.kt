@@ -1,4 +1,4 @@
-package com.example.chatcompose.components
+package com.example.chatcompose.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.RadioButton

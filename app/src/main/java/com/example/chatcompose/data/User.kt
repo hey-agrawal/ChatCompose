@@ -1,6 +1,6 @@
 package com.example.chatcompose.data
 
-data class UserData(
+data class User(
     val name: String,
     val profileImage: String,
     val email: String,
